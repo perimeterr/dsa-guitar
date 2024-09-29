@@ -8,12 +8,9 @@ if __name__ == '__main__':
     # initialize window
     stdkeys.create_window()
 
-    freqs = []
-    for i in range(20):
-        freqs.append(440 * (1.059463**(i-12)))
     strings = []
     for i in range(20):
-        strings.append(GuitarString(freqs[i]))
+        strings.append(GuitarString(440*(1.059463**(i-12))))
 
     pluckedstrings = set()
     sample = 0
