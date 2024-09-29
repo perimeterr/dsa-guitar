@@ -28,10 +28,10 @@ if __name__ == '__main__':
         # check if the user has typed a key; if so, process it
         if stdkeys.has_next_key_typed():
             key = stdkeys.next_key_typed()
-            keyIndex = keydict.get(key, -1)
-            if keyIndex != -1: 
-                strings[keyIndex].pluck()
-                pluckedstrings.add(strings[keyIndex])
+            key_index = keydict.get(key, -1)
+            if key_index != -1: 
+                strings[key_index].pluck()
+                pluckedstrings.add(strings[key_index])
 
         # compute the superposition of samples
         if len(pluckedstrings) != 0:
