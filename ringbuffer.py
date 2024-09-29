@@ -9,16 +9,18 @@ class RingBuffer:
         self.MAX_CAP = capacity
         self._front = 0
         self._rear = 0
-        self.buffer = []
-        self._size = 0
-        for n in range(self.MAX_CAP):
-            self.buffer.append(None)
+        self.buffer = [None] * capacity
 
     def size(self) -> int:
         '''
         Return number of items currently in the buffer
         '''
-        return self._size
+        if self._rear > self._front:
+            return self._rear - self._front
+        elif self._rear < self._front:
+            return self.MAX_CAP - self._front + self._rear + 1
+        else:
+            return 0 if self.buffer[self._rear] == None else self.MAX_CAP
     
     def is_empty(self) -> bool:
         '''
@@ -38,13 +40,9 @@ class RingBuffer:
         '''
         if self.is_full():
             raise RingBufferFull("Buffer is full")
-        else:
-            self.buffer[self._rear] = x
-            self._rear += 1
-            if self._rear == self.MAX_CAP:
-                self._rear = 0
-            self._size += 1
-
+        self.buffer[self._rear] = x
+        self._rear += 1
+        if self._rear == self.MAX_CAP: self._rear = 0
 
     def dequeue(self) -> float:
         '''
@@ -52,13 +50,10 @@ class RingBuffer:
         '''
         if self.is_empty():
             raise RingBufferEmpty("Buffer is empty")
-        else:
-            x = self.buffer[self._front]
-            self.buffer[self._front] = None
-            self._front += 1
-            if self._front == self.MAX_CAP:
-                self._front = 0
-            self._size -= 1
+        x = self.buffer[self._front]
+        self.buffer[self._front] = None
+        self._front += 1
+        if self._front == self.MAX_CAP: self._front = 0
         return x
 
     def peek(self) -> float:
@@ -67,8 +62,7 @@ class RingBuffer:
         '''
         if self.is_empty():
             raise RingBufferEmpty("Buffer is empty")
-        else:
-            return self.buffer[self._front]
+        return self.buffer[self._front]
 
 
 class RingBufferFull(Exception):
