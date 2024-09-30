@@ -1,9 +1,10 @@
 from guitarstring import GuitarString
+from guitarstring import SAMPLING_RATE
 from stdaudio import play_sample
 import stdkeys
 
 keydict = {'q':0,'2':1,'w':2,'e':3,'4':4,'r':5,'5':6,'t':7,'y':8,'7':9,'u':10,'8':11,'i':12,'9':13,'o':14,'p':15,'-':16,'[':17,'=':18,']':19}
-
+MAX_TICKS = SAMPLING_RATE * 5
 if __name__ == '__main__':
     # initialize window
     stdkeys.create_window()
@@ -43,6 +44,6 @@ if __name__ == '__main__':
         # advance the simulation of each guitar string by one step
         for x in pluckedstrings.copy():
             x.tick()
-            if x.time() > 220500:
+            if x.time() > MAX_TICKS:
                 pluckedstrings.remove(x)
 

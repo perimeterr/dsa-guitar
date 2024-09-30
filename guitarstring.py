@@ -2,13 +2,15 @@ from ringbuffer import RingBuffer
 import math
 import random
 
+SAMPLING_RATE = 44100
+
 class GuitarString:
     def __init__(self, frequency: float):
         '''
         Create a guitar string of the given frequency, using a sampling rate of 44100 Hz
         '''
         # TO-DO: implement this
-        self.capacity = math.ceil(44100/frequency)
+        self.capacity = math.ceil(SAMPLING_RATE/frequency)
         self.buffer = RingBuffer(self.capacity)
         for i in range(self.capacity):
             self.buffer.enqueue(0)
